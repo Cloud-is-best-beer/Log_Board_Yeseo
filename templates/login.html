@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+</head>
+<body>
+    
+    <form action="/login" method="POST">
+        로그인<br>
+        <input type="text" name = "id" value="" placeholder="아이디"><br>
+        <input type="text" name = "password" value="" placeholder="비밀번호"><br>
+        <input type="submit" value="로그인">
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
