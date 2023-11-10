@@ -10,7 +10,7 @@
     <form action="/login" method="POST">
         로그인<br>
         <input type="text" name = "id" value="" placeholder="아이디"><br>
-        <input type="text" name = "password" value="" placeholder="비밀번호"><br>
+        <input type="password" name = "password" value="" placeholder="비밀번호"><br>
         <input type="submit" value="로그인">
     </form>
     {% with messages = get_flashed_messages() %}
