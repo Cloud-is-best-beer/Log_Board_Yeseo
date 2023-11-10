@@ -7,8 +7,8 @@ class DB:
     def connect(self):
         self.connection = pymysql.connect(
             host='127.0.0.1',
-            user='root',
-            password='dbpw1234',
+            user='',
+            password='',
             database='log_board',
             charset='utf8'
         )

@@ -24,6 +24,7 @@ def login(): # 로그인
         if result: # 로그인 성공
             print('login success',user_id)
             session['user_id'] = user_id
+            db.disconnect()
             return redirect(url_for('home'))
         else: # 로그인 실패
             print('login fail')
