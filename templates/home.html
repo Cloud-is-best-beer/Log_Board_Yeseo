@@ -5,15 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME</title>
 </head>
+
 <body>
     게시판 HOME<br>
-    {% if 'user_id' in session%}
+    {% if 'user_id' in session %}
         {{ session['user_id'] }}
         <a href="/logout">Logout</a>
+        <input type = 'button' value='게시판 글쓰기' onclick="location.href='/writePost'">
     {% else %}
         <a href = '/login'>로그인</a>
         <a href = '/signup'>회원가입</a>
     {% endif %}
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th th colspan='2'>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post['id'] }}</td> <!-- 게시글 아이디 -->
+                    <td><a href = "/post/{{ post['id'] }}/">{{ post['title'] }}</a></td> <!-- 게시글 제목 -->
+                    <td>{{ post['user'] }}</td> <!-- 게시글 작성자 -->
+                    <td>{{ post['date'].strftime('%Y.%m.%d') }}</td> <!-- 게시글 작성일 -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </body>
 </html>

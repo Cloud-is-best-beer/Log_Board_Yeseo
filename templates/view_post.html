@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST</title>
+</head>
+<body>
+    {% if user_id==post['user'] %}
+        <input type=button value='수정' onclick="location.href='/post/{{ post['id'] }}/modify/'">
+        <input type=button value='삭제' onclick="location.href='/post/{{ post['id'] }}/delete/'">
+    {% endif %}
+    <input type=button value='홈' onclick="location.href='/'">
+    <br>
+    {{ post['title'] }}<br>
+    {{ post['user'] }}<br>
+    {{ post['date'] }}<p>
+    {{ post['contents'] }}
+</body>
+</html>

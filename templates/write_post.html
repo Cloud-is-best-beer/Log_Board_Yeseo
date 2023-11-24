@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
+    <title>WRITE POST</title>
 </head>
 <body>
-    
-    <form action="/login" method="POST">
-        로그인<br>
-        <input type="text" name = "id" value="" placeholder="아이디"><br>
-        <input type="password" name = "password" value="" placeholder="비밀번호"><br>
-        <input type="submit" value="로그인">
+    게시판 글쓰기
+    <form action="/writePost" method="POST">
+        <input type="text" name = "title" value="{{ title }}" placeholder="제목"><br>
+        <textarea name = "contents" placeholder="내용을 입력하세요.">{{ contents }}</textarea><br>
+        <input type="submit" value="등록">
     </form>
     {% with messages = get_flashed_messages() %}
         {% if messages %}

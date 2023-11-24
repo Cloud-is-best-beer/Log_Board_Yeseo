@@ -26,5 +26,15 @@ class DB:
         except pymysql.Error as e:
             print(f"Error: {e}")
             return None
+
+def get_posts():
+    db = DB()
+    db.connect()
+    query = "SELECT * FROM post"
+    posts = db.execute_query(query)
+    column_names = ["id", "title", "contents", "user", "date"]
+    dict_posts = [dict(zip(column_names, post)) for post in posts]
+    db.disconnect()
+    return dict_posts
     
     

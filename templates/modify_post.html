@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
+    <title>POST MODIFY</title>
 </head>
 <body>
-    
-    <form action="/login" method="POST">
-        로그인<br>
-        <input type="text" name = "id" value="" placeholder="아이디"><br>
-        <input type="password" name = "password" value="" placeholder="비밀번호"><br>
-        <input type="submit" value="로그인">
+    <form action="{{ url_for('modify_post', id=post['id']) }}" method="POST">
+        <input type="text" name = "title" value="{{ post['title'] }}" placeholder="제목"><br>
+        <textarea name = "contents" placeholder="내용을 입력하세요.">{{ post['contents'] }}</textarea><br>
+        <input type="submit" value="수정">
     </form>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
