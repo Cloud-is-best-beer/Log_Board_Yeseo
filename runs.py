@@ -69,6 +69,9 @@ def logout(): # 로그아웃
 
 @app.route('/writePost', methods =['GET', 'POST'])
 def write_post(): # 게시글 작성
+    if not is_login:
+        return redirect(url_for('login'))
+    
     if request.method =='POST':  
         title = request.form['title']
         contents = request.form['contents']
@@ -99,13 +102,21 @@ def view_post(id): # 게시글 확인
         if post['id']==id:
             return render_template('view_post.html', post=post, user_id=session.get('user_id'))
     
-
 @app.route('/post/<int:id>/modify/', methods=['GET', 'POST'])
 def modify_post(id): # 게시글 수정
+    if not is_login():
+        return redirect(url_for('login'))
+
+    posts = get_posts()
+    for post in posts:
+        if id == post['id']:
+            if session['user_id'] != post['user']:
+                return redirect(url_for('home'))
+
     if request.method == 'POST':
         title = request.form['title']
         contents = request.form['contents']
-        
+
         if title.strip() == "" or contents.strip() == "":
             flash('제목과 내용을 모두 입력해주세요.')
             return render_template('modify_post.html', post={'id': id, 'title': title, 'contents': contents})
@@ -116,20 +127,25 @@ def modify_post(id): # 게시글 수정
             print('post modify success', title)
             db.disconnect()
             return redirect(url_for('view_post', id=id))
-        
+
     else:
         posts = get_posts()
         for post in posts:
             if id == post['id']:
                 p = post
         return render_template('modify_post.html', post=p)
-        
 
 @app.route('/post/<int:id>/delete/')
 def delete_post(id): # 게시글 삭제
+    if not is_login():
+        return redirect(url_for('login'))
+
     posts = get_posts()
     for post in posts:
         if id == post['id']:
+            if session['user_id'] != post['user']:
+                return redirect(url_for('home'))
+
             db.connect()
             query = f"DELETE FROM post WHERE post_id='{id}'"
             result = db.execute_query(query)
@@ -137,7 +153,8 @@ def delete_post(id): # 게시글 삭제
             db.disconnect()
             return redirect(url_for('home'))
 
-    
+def is_login(): # 세션에 아이디 있는지 확인
+    return 'user_id' in session
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
